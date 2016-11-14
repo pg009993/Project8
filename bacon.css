@@ -1,0 +1,16 @@
+div {
+    position: relative;
+    text-align: center;
+}
+
+legend {
+    text-align: left;
+}
+
+fieldset{
+    width: 320px;
+    padding: 10px;
+    margin: 0;
+    margin: auto; 
+}
+
