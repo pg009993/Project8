@@ -1,6 +1,12 @@
 div {
     position: relative;
     text-align: center;
+    font-family: sans-serif;
+}
+
+#banner{
+    background-image: url(banner-background.png);
+    color: white;
 }
 
 legend {
@@ -13,4 +19,7 @@ fieldset{
     margin: 0;
     margin: auto; 
 }
+
+
+
 
