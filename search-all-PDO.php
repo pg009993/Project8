@@ -10,14 +10,14 @@
 <body>
     <?php
         
-$firstname =  $_GET['firstname'];
-$lastname =  $_GET['lastname'];
+$firstname =  $_GET['first_name'];
+$lastname =  $_GET['last_name'];
 
     
 //Establish a connection with PHP PDO API    
 $servername = "127.0.0.1";
 $username = "root";
-$password = "root";
+$password = "root"; // insert your password here. 
 $database = "myDB"; 
 
     
