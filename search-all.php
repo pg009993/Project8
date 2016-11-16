@@ -38,9 +38,11 @@ else{
     $query = "SELECT * FROM myDB.roles, myDB.movies WHERE myDB.roles.movie_id = myDB.movies.id AND actor_id = " . $row['id'];
     $result = mysql_query($query);
     if($result){
+    	echo '<table>';
     	while($row = mysql_fetch_assoc($result)){
-    		var_dump($row);
+    		echo '<tr><td>' . $row['name'] . '</td><td>'. $row['year'] . '</td><td>' . $row['rank'] . '</td></tr>';
     	}
+    	echo '</table>';
     } else {
     	echo "err";
     }
