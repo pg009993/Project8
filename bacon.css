@@ -20,6 +20,26 @@ fieldset{
     margin: auto; 
 }
 
+tr:nth-child(even){
+    background-color: lightgray;
+}
+
+td {
+    text-align: center;
+}
+
+#content {
+    position: absolute;
+    left: 10%;
+    width: 80%;
+    background-color: #DAD9D4;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
 
 
 
