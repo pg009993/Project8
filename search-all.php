@@ -49,6 +49,7 @@
             } catch (PDOException $e) {
                 die('Database connection failed: ' . $e->getMessage());
             }
+            $conn = null;
             ?>
             <p>A table showing movies that this actor has starred in.</p>
         </div>
