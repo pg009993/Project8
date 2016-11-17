@@ -1,57 +1,51 @@
 <!DOCTYPE html>
 <html>
-	<head>
+    <head>
         <title>My Movie Database (MyMDb)</title>
-		<meta charset="utf-8" />
+        <meta charset="utf-8" />
 
-		<!-- Link to your CSS file that you should edit -->
-		<link href="bacon.css" type="text/css" rel="stylesheet" />
-	</head>
+        <!-- Link to your CSS file that you should edit -->
+        <link href="bacon.css" type="text/css" rel="stylesheet" />
+    </head>
 
-	<body>
+    <body>
 
-<?php
+        <?php
+        $firstname = $_GET['firstname'];
+        $lastname = $_GET['lastname'];
 
-$firstname =  $_GET['firstname'];
-$lastname =  $_GET['lastname'];
+        $servername = 'localhost:3306';
+        $dbname = 'myDB';
+        $username = 'root';
+        $password = 'Gpp!NzTRM2Cbs';
 
-$servername = "127.0.0.1";
-$username = "root";
-$password = "perfectmint299";
+        // Create connection
+        try {
+            $conn = new PDO("mysql:host=" . $servername . ";dbname=" . $dbname, $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Create connection
-$conn = mysql_connect($servername, $username, $password);
-if(! $conn){
-    die("Database connection failed: ".mysql_error());
-}
+            $query = "SELECT * FROM actors WHERE first_name = '" . $firstname . "' AND last_name = '" . $lastname . "'";
+            $stmt = $conn->prepare($query);
 
-$db_select = mysql_select_db("myDB", $conn);
-if(! $db_select){
-    die("Database conn failed: ".mysql_error());
-}
-else{
-    $query = "SELECT * FROM myDB.actors WHERE first_name = '" . $firstname . "' AND last_name = '" . $lastname . "'";
-    $result = mysql_query($query);
-    if($result){
-    $row = mysql_fetch_assoc($result);
-    
-    $query = "SELECT * FROM myDB.roles, myDB.movies WHERE myDB.roles.movie_id = myDB.movies.id AND actor_id = " . $row['id'];
-    $result = mysql_query($query);
-    if($result){
-    	echo '<table>';
-    	while($row = mysql_fetch_assoc($result)){
-    		echo '<tr><td>' . $row['name'] . '</td><td>'. $row['year'] . '</td><td>' . $row['rank'] . '</td></tr>';
-    	}
-    	echo '</table>';
-    } else {
-    	echo "err";
-    }
-} else {
-	echo "err";
-}
-}
+            $stmt->execute();
 
-?>
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $row = $stmt->fetch();
+            
+            $query = "SELECT * FROM roles, movies WHERE roles.movie_id = movies.id AND actor_id = " . $row['id'];
+            $stmt = $conn->prepare($query);
 
-	</body>
+            $stmt->execute();
+
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            while($row = $stmt->fetch()){
+                echo $row["name"] . '<br>';
+            }
+            
+        } catch (PDOException $e) {
+            die('Database connection failed: ' . $e->getMessage());
+        }
+        ?>
+
+    </body>
 </html>
