@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <head>
+	<head>
         <title>My Movie Database (MyMDb)</title>
-        <meta charset="utf-8" />
+		<meta charset="utf-8" />
 
-        <!-- Link to your CSS file that you should edit -->
-        <link href="bacon.css" type="text/css" rel="stylesheet" />
-    </head>
+		<!-- Link to your CSS file that you should edit -->
+		<link href="bacon.css" type="text/css" rel="stylesheet" />
+	</head>
 
-    <body>
+	<body>
 
-        <?php
+<?php
         include 'common.php';
         
         $firstname = $_GET['firstname'];
@@ -28,7 +28,8 @@
                 exit;
             }
             
-            $query = "SELECT * FROM roles, movies WHERE roles.movie_id = movies.id AND actor_id = " . $actorid;
+            
+            $query = "SELECT * FROM movies m JOIN roles r ON r.movie_id = m.id JOIN actors a ON r.actor_id = a.id JOIN roles rr ON rr.movie_id = m.id JOIN actors aa ON rr.actor_id = aa.id WHERE r.movie_id = rr.movie_id AND r.actor_id = '" . $actorid . "' AND rr.actor_id = " . $kevinsid;
             $stmt = $conn->prepare($query);
 
             $stmt->execute();
@@ -43,5 +44,5 @@
         }
         ?>
 
-    </body>
+	</body>
 </html>
