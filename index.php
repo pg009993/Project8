@@ -11,6 +11,7 @@
     <body>
         <div id="frame">
             <div id="banner">
+<!--                This div tag uses style from css file with id=banner-->
                 <a href="index.php"><img src="mymdb.png" alt="banner logo" /></a>
                 My Movie Database
             </div>

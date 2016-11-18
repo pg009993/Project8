@@ -16,8 +16,9 @@
         <div id="content">
             <h1>Results for <?php echo $_GET['firstname'] . ' ' . $_GET['lastname']; ?> (one degree of Kevin Bacon) </h1>
             <?php
+//            Line below connects to database, done in common.php
             include 'common.php';
-
+//            Lines below set user input to variables $firstname and $lastname
             $firstname = $_GET['firstname'];
             $lastname = $_GET['lastname'];
 
@@ -25,7 +26,7 @@
             try {
                 $conn = new PDO("mysql:host=" . $servername . ";dbname=" . $dbname, $username, $password);
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+                // function below returns actor_id, from common.php
                 $actorid = get_actor_id($firstname, $lastname);
 
                 if ($actorid === -1) {
@@ -33,7 +34,7 @@
                     exit;
                 }
 
-
+                // query below returns list of movies in which Kevin Bacon and other actor has starred in
                 $query = "SELECT * FROM movies m JOIN roles r ON r.movie_id = m.id JOIN actors a ON r.actor_id = a.id JOIN roles rr ON rr.movie_id = m.id JOIN actors aa ON rr.actor_id = aa.id WHERE r.movie_id = rr.movie_id AND r.actor_id = '" . $actorid . "' AND rr.actor_id = " . $kevinsid . " ORDER BY m.year DESC, m.name ASC";
                 $stmt = $conn->prepare($query);
 
@@ -42,6 +43,7 @@
                 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
                 echo '<table><tr><th>#</th><th>Title</th><th>Year</th></tr>';
                 $index = 1;
+                // loop below prints out results in html
                 while ($row = $stmt->fetch()) {
                     echo '<tr><td>' . $index . '</td><td>' . $row["name"] . '</td><td>' . $row['year'] . '</td></tr>';
                     $index++;
